@@ -6,7 +6,7 @@ from typing import Annotated
 
 # ---- validation model ----
 class Person(BaseModel):
-    id : Annotated[str, Field(...,description="id of person", examples="p1")]
+    id : Annotated[str, Field(...,description="id of person", examples=["p1"])]
     name: Annotated[str, Field(...,description="name of person")]
     age: Annotated[int,Field(...,gt=0,lt=100,description="age of person")]
     weight: Annotated[float,Field(...,gt=0,description="weight of person in kgs")]
@@ -16,7 +16,7 @@ class Person(BaseModel):
     @computed_field
     @property
     def bmi(self) -> float:
-        bmi = round(self.height/(self.height**2),2)
+        bmi = round(self.weight/(self.height**2),2)
         return bmi
     
     @computed_field
@@ -24,8 +24,10 @@ class Person(BaseModel):
     def verdict(self) -> str:
         if self.bmi < 18.5:
             verdict = "underweight"
-        elif self.bmi <30:
+        elif self.bmi <25:
             verdict = "normal"
+        elif self.bmi < 30:
+            verdict = "overweight"
         else:
             verdict = "obese"
         
@@ -64,7 +66,7 @@ def people():
 # path parameter (if we want to find a specific person using id)
 # path function helps readability of parameter. (... means its required or important)
 @app.get('/person/{person_id}')
-def person(person_id: str= Path(...,description="enter persons id",examples="p1")):
+def person(person_id: str= Path(...,description="enter persons id",examples=["p1"])):
     person = get_people()
 
     if person_id in person:
