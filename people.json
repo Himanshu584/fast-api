@@ -1,5 +1,5 @@
 {
-    "p1":{"name":"Himanshu","age":23,"weight":82,"education":"masters"},
-    "p2":{"name":"abhishek","age":24,"weight":71,"education":"masters"},
-    "p3":{"name":"Priyanshu","age":25,"weight":94,"education":"DNS-BSC"}
+    "p1":{"name":"Himanshu","age":23,"weight":82,"height":1.76,"education":"masters"},
+    "p2":{"name":"abhishek","age":24,"weight":71,"height":1.9,"education":"masters"},
+    "p3":{"name":"Priyanshu","age":25,"weight":94,"height":1.75,"education":"DNS-BSC"}
 }
