@@ -157,3 +157,21 @@ def update_person(id: str ,person_update: PersonUpdate):
     save_people(data)
 
     return JSONResponse(status_code=200,content="person updated successfully")
+
+
+# --- delete api ---
+
+@app.delete('/delete/{id}')
+def delete_person(id: str=Path(...,description="id of person to delete")):
+    data = get_people()
+
+    # if person id not in data
+    if id not in data:
+        raise HTTPException(status_code=404,detail="Person does not exist")
+    
+    # if person id is found in data
+    del data[id]
+    # after deletion save data to db
+    save_people(data)
+
+    return JSONResponse(status_code=200,content="Person deleted successfully")
