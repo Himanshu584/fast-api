@@ -2,7 +2,7 @@ from fastapi import FastAPI, Path, HTTPException, Query
 from fastapi.responses import JSONResponse
 import json
 from pydantic import BaseModel,Field, computed_field
-from typing import Annotated
+from typing import Annotated,Optional
 
 # ---- validation model ----
 class Person(BaseModel):
@@ -32,6 +32,16 @@ class Person(BaseModel):
             verdict = "obese"
         
         return verdict
+    
+
+# ----- update person validation model -----
+class PersonUpdate(BaseModel):
+    name: Annotated[Optional[str], Field(default=None)]
+    age: Annotated[Optional[int],Field(gt=0,lt=100,default=None)]
+    weight: Annotated[Optional[float],Field(gt=0,default=None)]
+    height: Annotated[Optional[float],Field(gt=0,default=None)]
+    education: Annotated[Optional[str],Field(default=None)]
+
 
 # make instance of fastapi 
 app = FastAPI()
@@ -110,3 +120,40 @@ def create_person(person: Person):
     save_people(data)
 
     return JSONResponse(status_code=201,content={"message":"person created successfuly"}) #201 means successful creation
+
+# ----- put and delete -----
+
+# put (update)
+@app.put('/update/{id}')
+def update_person(id: str ,person_update: PersonUpdate):
+    data = get_people()
+
+    # check if person we are trying to update is present in existing people
+    if id not in data:
+        raise HTTPException(status_code=404,detail="person does not exist")
+    
+    # if person id found , we will change the values 
+    existing_person_info = data[id]
+    
+    #convert pydantic object to dictionary + we want only fields that we want to change1
+    info_to_update= person_update.model_dump(exclude_unset=True)
+
+    # update the person info
+    for key,value in info_to_update.items():
+        existing_person_info[key] = value
+    
+    # now we have problem because when we upate the values bmi and verdict must change 
+    # for that we need to create Person pydantic object but first we need to add id to existing person info because it is required in Person class
+    existing_person_info['id'] = id
+    person_pydantic_object = Person(**existing_person_info)
+
+    #now convert the object to dictionary
+    existing_person_info=person_pydantic_object.model_dump(exclude=['id'])
+
+    # add dictionary to data
+    data[id] = existing_person_info
+
+    # save data
+    save_people(data)
+
+    return JSONResponse(status_code=200,content="person updated successfully")
