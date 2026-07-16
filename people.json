@@ -1,6 +1,1 @@
-{
-    "p1": {"name": "Himanshu", "age": 23, "weight": 82, "height": 1.76, "education": "masters", "bmi": 32, "verdict": "obese"},
-    "p2": {"name": "abhishek", "age": 24, "weight": 71, "height": 1.9, "education": "masters", "bmi": 17, "verdict": "underweight"},
-    "p3": {"name": "Priyanshu", "age": 25, "weight": 94, "height": 1.75, "education": "DNS-BSC", "bmi": 25, "verdict": "normal"}, 
-    "p4": {"name": "Waris", "age": 22, "weight": 70.0, "height": 190.0, "education": "msc", "bmi": 0.0, "verdict": "underweight"}
-}
+{"p1": {"name": "Himanshu", "age": 23, "weight": 72.0, "height": 1.76, "education": "masters", "bmi": 23.24, "verdict": "normal"}, "p2": {"name": "abhishek", "age": 24, "weight": 71, "height": 1.9, "education": "masters", "bmi": 17, "verdict": "underweight"}, "p3": {"name": "Priyanshu", "age": 25, "weight": 94, "height": 1.75, "education": "DNS-BSC", "bmi": 25, "verdict": "normal"}, "p4": {"name": "Waris", "age": 22, "weight": 70.0, "height": 190.0, "education": "msc", "bmi": 0.0, "verdict": "underweight"}, "p6": {"name": "amarvansh", "age": 22, "weight": 75.0, "height": 175.0, "education": "b-pharma", "bmi": 0.0, "verdict": "underweight"}}
